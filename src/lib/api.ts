@@ -137,6 +137,11 @@ function rewriteUrlAndOptions(url: string, options?: RequestInit): { url: string
     }
   }
 
+  // Cegah duplikasi /api/api/ jika API_URL sudah diakhiri dengan /api
+  if (rewrittenUrl.includes('/api/api/')) {
+    rewrittenUrl = rewrittenUrl.replace('/api/api/', '/api/');
+  }
+
   const method = newOptions?.method?.toUpperCase() || 'GET';
 
   // 2. Jika GET dan memiliki parameter `id` di query (misal: /api/nasabah?id=NS-123), rewrite ke path param /api/nasabah/NS-123
