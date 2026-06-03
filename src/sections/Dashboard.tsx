@@ -3423,30 +3423,30 @@ const ProfilPage: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-4">
       {/* Header Profile Card */}
-      <div className="relative overflow-hidden rounded-3xl shadow-xl">
+      <div className="relative overflow-hidden rounded-2xl shadow-md">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0F3D2E] via-[#1a5d4a] to-[#0F3D2E]" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-72 h-72 bg-[#22C55E]/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl" />
+        <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl" />
+        <div className="absolute bottom-0 left-0 w-60 h-60 bg-[#22C55E]/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-2xl" />
         
-        <div className="relative p-10 text-white">
-          <div className="flex items-center gap-8">
-            <div className="w-32 h-32 bg-white/20 rounded-3xl flex items-center justify-center text-5xl font-black backdrop-blur-sm border border-white/30">
+        <div className="relative p-6 text-white">
+          <div className="flex items-center gap-6">
+            <div className="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center text-3xl font-black backdrop-blur-sm border border-white/30">
               {user?.nama?.[0]?.toUpperCase()}
             </div>
             <div className="flex-1">
-              <h1 className="text-4xl font-black mb-2">{user?.nama}</h1>
-              <p className="text-white/80 text-lg font-semibold mb-1">Anggota Bank Sampah</p>
-              <p className="text-white/60 text-sm">{user?.email}</p>
-              <div className="mt-4 flex gap-4">
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/20">
-                  <p className="text-white/60 text-xs uppercase tracking-wider">Saldo</p>
-                  <p className="text-white font-bold text-lg">Rp {(user?.saldo || 0).toLocaleString('id-ID')}</p>
+              <h1 className="text-2xl font-black mb-1">{user?.nama}</h1>
+              <p className="text-white/80 text-sm font-semibold mb-0.5">Anggota Bank Sampah</p>
+              <p className="text-white/60 text-xs">{user?.email}</p>
+              <div className="mt-3 flex gap-3">
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl px-3 py-1.5 border border-white/20">
+                  <p className="text-white/60 text-[10px] uppercase tracking-wider">Saldo</p>
+                  <p className="text-white font-bold text-sm">Rp {(user?.saldo || 0).toLocaleString('id-ID')}</p>
                 </div>
-                <div className="bg-white/10 backdrop-blur-sm rounded-xl px-4 py-2 border border-white/20">
-                  <p className="text-white/60 text-xs uppercase tracking-wider">Total Setoran</p>
-                  <p className="text-white font-bold text-lg">{(user?.totalSetoran || 0).toLocaleString('id-ID')} kg</p>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl px-3 py-1.5 border border-white/20">
+                  <p className="text-white/60 text-[10px] uppercase tracking-wider">Total Setoran</p>
+                  <p className="text-white font-bold text-sm">{(user?.totalSetoran || 0).toLocaleString('id-ID')} kg</p>
                 </div>
               </div>
             </div>
@@ -3455,11 +3455,11 @@ const ProfilPage: React.FC = () => {
       </div>
 
       {/* Tabs */}
-      <div className="space-y-6">
-        <div className="flex gap-2 border-b border-gray-200 overflow-x-auto">
+      <div className="space-y-4">
+        <div className="flex gap-1 border-b border-gray-200 overflow-x-auto">
           <button
             onClick={() => setActiveTab('ringkasan')}
-            className={`px-6 py-3 font-bold text-sm whitespace-nowrap transition-all border-b-2 ${
+            className={`px-5 py-2.5 font-bold text-xs whitespace-nowrap transition-all border-b-2 ${
               activeTab === 'ringkasan'
                 ? 'border-[#22C55E] text-[#22C55E]'
                 : 'border-transparent text-gray-600 hover:text-gray-900'
@@ -3469,7 +3469,7 @@ const ProfilPage: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('edit')}
-            className={`px-6 py-3 font-bold text-sm whitespace-nowrap transition-all border-b-2 ${
+            className={`px-5 py-2.5 font-bold text-xs whitespace-nowrap transition-all border-b-2 ${
               activeTab === 'edit'
                 ? 'border-[#22C55E] text-[#22C55E]'
                 : 'border-transparent text-gray-600 hover:text-gray-900'
@@ -3479,7 +3479,7 @@ const ProfilPage: React.FC = () => {
           </button>
           <button
             onClick={() => setActiveTab('keamanan')}
-            className={`px-6 py-3 font-bold text-sm whitespace-nowrap transition-all border-b-2 ${
+            className={`px-5 py-2.5 font-bold text-xs whitespace-nowrap transition-all border-b-2 ${
               activeTab === 'keamanan'
                 ? 'border-[#22C55E] text-[#22C55E]'
                 : 'border-transparent text-gray-600 hover:text-gray-900'
@@ -3491,140 +3491,140 @@ const ProfilPage: React.FC = () => {
 
         {/* Tab: Ringkasan */}
         {activeTab === 'ringkasan' && (
-          <div className="space-y-6">
+          <div className="space-y-4">
             {/* Penimbangan Pertama */}
             {penimbanganPertama && (
-            <div className="eco-card p-8 bg-gradient-to-br from-blue-50 to-blue-25 border-2 border-blue-200 rounded-3xl shadow-lg">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="font-black text-[#0F3D2E] text-2xl">Penimbangan Pertama</h3>
-                <div className="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600">
-                  <Scale className="w-7 h-7" />
-                </div>
-              </div>
-              <div className="space-y-4">
-                <div className="bg-white rounded-2xl p-4 border-2 border-blue-100">
-                  <p className="text-xs font-bold text-gray-400 uppercase mb-2 tracking-wider">Jenis Sampah</p>
-                  <p className="font-bold text-[#0F3D2E] text-lg">{penimbanganPertama.jenisSampahNama}</p>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white rounded-2xl p-4 border-2 border-blue-100">
-                    <p className="text-xs font-bold text-gray-400 uppercase mb-2 tracking-wider">Berat</p>
-                    <p className="font-bold text-[#0F3D2E] text-2xl">{typeof penimbanganPertama.berat === 'number' ? penimbanganPertama.berat.toFixed(2) : penimbanganPertama.berat} <span className="text-sm">kg</span></p>
+              <div className="eco-card p-5 bg-gradient-to-br from-blue-50 to-blue-25/50 border border-blue-200 rounded-2xl shadow-sm">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-9 h-9 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600">
+                    <Scale className="w-5 h-5" />
                   </div>
-                  <div className="bg-white rounded-2xl p-4 border-2 border-blue-100">
-                    <p className="text-xs font-bold text-gray-400 uppercase mb-2 tracking-wider">Tanggal</p>
-                    <p className="font-bold text-[#0F3D2E]">{penimbanganPertama.tanggal}</p>
+                  <h4 className="font-bold text-[#0F3D2E] text-base">Penimbangan Pertama</h4>
+                </div>
+                <div className="grid grid-cols-3 gap-4">
+                  <div className="bg-white rounded-xl p-3 border border-blue-100">
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Jenis Sampah</p>
+                    <p className="font-bold text-[#0F3D2E] text-sm">{penimbanganPertama.jenisSampahNama}</p>
+                  </div>
+                  <div className="bg-white rounded-xl p-3 border border-blue-100">
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Berat</p>
+                    <p className="font-bold text-[#0F3D2E] text-sm">{typeof penimbanganPertama.berat === 'number' ? penimbanganPertama.berat.toFixed(2) : penimbanganPertama.berat} kg</p>
+                  </div>
+                  <div className="bg-white rounded-xl p-3 border border-blue-100">
+                    <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Tanggal</p>
+                    <p className="font-bold text-[#0F3D2E] text-sm">
+                      {new Date(penimbanganPertama.tanggal).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Informasi Pribadi - Read Only */}
+            <div className="eco-card p-5 rounded-2xl shadow-sm border-l-4 border-l-[#22C55E]">
+              <h3 className="text-base font-bold text-[#0F3D2E] mb-4 flex items-center gap-3">
+                <div className="w-9 h-9 bg-[#22C55E]/10 rounded-xl flex items-center justify-center">
+                  <UserCircle className="w-5 h-5 text-[#22C55E]" />
+                </div>
+                Informasi Pribadi
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-500 mb-1 uppercase tracking-wider">Nama Lengkap</label>
+                  <div className="bg-gray-50/50 rounded-xl px-4 py-2 border border-gray-200/60">
+                    <p className="font-semibold text-[#0F3D2E] text-sm">{user?.nama}</p>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-500 mb-1 uppercase tracking-wider">Email</label>
+                  <div className="bg-gray-50/50 rounded-xl px-4 py-2 border border-gray-200/60">
+                    <p className="font-semibold text-[#0F3D2E] text-sm">{user?.email}</p>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-500 mb-1 uppercase tracking-wider">Nomor Telepon</label>
+                  <div className="bg-gray-50/50 rounded-xl px-4 py-2 border border-gray-200/60">
+                    <p className="font-semibold text-[#0F3D2E] text-sm">{user?.telepon || '-'}</p>
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-500 mb-1 uppercase tracking-wider">Alamat</label>
+                  <div className="bg-gray-50/50 rounded-xl px-4 py-2 border border-gray-200/60">
+                    <p className="font-semibold text-[#0F3D2E] text-sm">{user?.alamat || '-'}</p>
                   </div>
                 </div>
               </div>
             </div>
-          )}
 
-          {/* Informasi Pribadi - Read Only */}
-          <div className="eco-card p-8 rounded-3xl shadow-lg border-l-4 border-l-[#22C55E]">
-            <h3 className="text-2xl font-black text-[#0F3D2E] mb-6 flex items-center gap-3">
-              <div className="w-12 h-12 bg-[#22C55E]/20 rounded-2xl flex items-center justify-center">
-                <UserCircle className="w-6 h-6 text-[#22C55E]" />
-              </div>
-              Informasi Pribadi
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider">Nama Lengkap</label>
-                <div className="bg-gray-50 rounded-2xl p-4 border-2 border-gray-200">
-                  <p className="font-bold text-[#0F3D2E] text-lg">{user?.nama}</p>
+            {/* Data Penarikan - Read Only */}
+            <div className="eco-card p-5 rounded-2xl shadow-sm border-l-4 border-l-amber-500">
+              <h3 className="text-base font-bold text-[#0F3D2E] mb-1 flex items-center gap-3">
+                <div className="w-9 h-9 bg-amber-100 rounded-xl flex items-center justify-center">
+                  <Banknote className="w-5 h-5 text-amber-600" />
                 </div>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider">Email</label>
-                <div className="bg-gray-50 rounded-2xl p-4 border-2 border-gray-200">
-                  <p className="font-bold text-[#0F3D2E] text-lg">{user?.email}</p>
+                Data Penarikan
+              </h3>
+              <p className="text-xs text-gray-500 mb-4 italic">Data ini digunakan untuk proses penarikan saldo Anda</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-500 mb-1 uppercase tracking-wider">Bank / E-Wallet</label>
+                  <div className="bg-gray-50/50 rounded-xl px-4 py-2 border border-gray-200/60">
+                    <p className="font-semibold text-[#0F3D2E] text-sm">{user?.rekening_bank || '-'}</p>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider">Nomor Telepon</label>
-                <div className="bg-gray-50 rounded-2xl p-4 border-2 border-gray-200">
-                  <p className="font-bold text-[#0F3D2E] text-lg">{user?.telepon || '-'}</p>
+                <div>
+                  <label className="block text-[10px] font-bold text-gray-500 mb-1 uppercase tracking-wider">Nomor Rekening / HP</label>
+                  <div className="bg-gray-50/50 rounded-xl px-4 py-2 border border-gray-200/60">
+                    <p className="font-semibold text-[#0F3D2E] text-sm">{user?.nomor_rekening || '-'}</p>
+                  </div>
                 </div>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider">Alamat</label>
-                <div className="bg-gray-50 rounded-2xl p-4 border-2 border-gray-200">
-                  <p className="font-bold text-[#0F3D2E] text-lg">{user?.alamat || '-'}</p>
+                <div className="md:col-span-2">
+                  <label className="block text-[10px] font-bold text-gray-500 mb-1 uppercase tracking-wider">Atas Nama</label>
+                  <div className="bg-gray-50/50 rounded-xl px-4 py-2 border border-gray-200/60">
+                    <p className="font-semibold text-[#0F3D2E] text-sm">{user?.nama_rekening || '-'}</p>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Data Penarikan - Read Only */}
-          <div className="eco-card p-8 rounded-3xl shadow-lg border-l-4 border-l-amber-500">
-            <h3 className="text-2xl font-black text-[#0F3D2E] mb-2 flex items-center gap-3">
-              <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center">
-                <Banknote className="w-6 h-6 text-amber-600" />
-              </div>
-              Data Penarikan
-            </h3>
-            <p className="text-sm text-gray-600 mb-6 italic">Data ini digunakan untuk proses penarikan saldo Anda</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider">Bank / E-Wallet</label>
-                <div className="bg-gray-50 rounded-2xl p-4 border-2 border-gray-200">
-                  <p className="font-bold text-[#0F3D2E] text-lg">{user?.rekening_bank || '-'}</p>
-                </div>
-              </div>
-              <div>
-                <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider">Nomor Rekening / HP</label>
-                <div className="bg-gray-50 rounded-2xl p-4 border-2 border-gray-200">
-                  <p className="font-bold text-[#0F3D2E] text-lg">{user?.nomor_rekening || '-'}</p>
-                </div>
-              </div>
-              <div className="md:col-span-2">
-                <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-wider">Atas Nama</label>
-                <div className="bg-gray-50 rounded-2xl p-4 border-2 border-gray-200">
-                  <p className="font-bold text-[#0F3D2E] text-lg">{user?.nama_rekening || '-'}</p>
-                </div>
-              </div>
-            </div>
-          </div>
           </div>
         )}
 
         {/* Tab: Edit Data */}
         {activeTab === 'edit' && (
-          <form onSubmit={handleEditData} className="space-y-6">
+          <form onSubmit={handleEditData} className="space-y-4">
             {/* Personal Information */}
-            <div className="eco-card p-8 rounded-3xl shadow-lg border-l-4 border-l-[#22C55E]">
-              <h3 className="text-2xl font-black text-[#0F3D2E] mb-6 flex items-center gap-3">
-                <div className="w-12 h-12 bg-[#22C55E]/20 rounded-2xl flex items-center justify-center">
-                  <UserCircle className="w-6 h-6 text-[#22C55E]" />
+            <div className="eco-card p-5 rounded-2xl shadow-sm border-l-4 border-l-[#22C55E]">
+              <h3 className="text-base font-bold text-[#0F3D2E] mb-4 flex items-center gap-3">
+                <div className="w-9 h-9 bg-[#22C55E]/10 rounded-xl flex items-center justify-center">
+                  <UserCircle className="w-5 h-5 text-[#22C55E]" />
                 </div>
                 Edit Informasi Pribadi
               </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#0F3D2E] mb-3 uppercase tracking-wider">Nama Lengkap</label>
+                  <label className="block text-[10px] font-bold text-[#0F3D2E] mb-1.5 uppercase tracking-wider">Nama Lengkap</label>
                   <Input
                     value={formData.nama}
                     onChange={(e) => setFormData({ ...formData, nama: e.target.value })}
-                    className="eco-input rounded-2xl border-2 border-[#22C55E]/30 focus:border-[#22C55E] focus:ring-2 focus:ring-[#22C55E]/20"
+                    className="eco-input rounded-xl border border-[#22C55E]/30 focus:border-[#22C55E] focus:ring-2 focus:ring-[#22C55E]/20 h-10 px-3 text-sm"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-[#0F3D2E] mb-3 uppercase tracking-wider">Nomor Telepon</label>
+                  <label className="block text-[10px] font-bold text-[#0F3D2E] mb-1.5 uppercase tracking-wider">Nomor Telepon</label>
                   <Input
                     value={formData.telepon}
                     onChange={(e) => setFormData({ ...formData, telepon: e.target.value })}
-                    className="eco-input rounded-2xl border-2 border-[#22C55E]/30 focus:border-[#22C55E] focus:ring-2 focus:ring-[#22C55E]/20"
+                    className="eco-input rounded-xl border border-[#22C55E]/30 focus:border-[#22C55E] focus:ring-2 focus:ring-[#22C55E]/20 h-10 px-3 text-sm"
                     required
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-xs font-bold text-[#0F3D2E] mb-3 uppercase tracking-wider">Alamat Lengkap</label>
+                  <label className="block text-[10px] font-bold text-[#0F3D2E] mb-1.5 uppercase tracking-wider">Alamat Lengkap</label>
                   <Input
                     value={formData.alamat}
                     onChange={(e) => setFormData({ ...formData, alamat: e.target.value })}
-                    className="eco-input rounded-2xl border-2 border-[#22C55E]/30 focus:border-[#22C55E] focus:ring-2 focus:ring-[#22C55E]/20"
+                    className="eco-input rounded-xl border border-[#22C55E]/30 focus:border-[#22C55E] focus:ring-2 focus:ring-[#22C55E]/20 h-10 px-3 text-sm"
                     required
                   />
                 </div>
@@ -3632,46 +3632,46 @@ const ProfilPage: React.FC = () => {
             </div>
 
             {/* Payment Information */}
-            <div className="eco-card p-8 rounded-3xl shadow-lg border-l-4 border-l-amber-500">
-              <h3 className="text-2xl font-black text-[#0F3D2E] mb-2 flex items-center gap-3">
-                <div className="w-12 h-12 bg-amber-100 rounded-2xl flex items-center justify-center">
-                  <Banknote className="w-6 h-6 text-amber-600" />
+            <div className="eco-card p-5 rounded-2xl shadow-sm border-l-4 border-l-amber-500">
+              <h3 className="text-base font-bold text-[#0F3D2E] mb-1 flex items-center gap-3">
+                <div className="w-9 h-9 bg-amber-100 rounded-xl flex items-center justify-center">
+                  <Banknote className="w-5 h-5 text-amber-600" />
                 </div>
                 Edit Data Penarikan
               </h3>
-              <p className="text-sm text-gray-600 mb-6 italic">Data ini digunakan untuk proses penarikan saldo Anda</p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <p className="text-xs text-gray-500 mb-4 italic">Data ini digunakan untuk proses penarikan saldo Anda</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-[#0F3D2E] mb-3 uppercase tracking-wider">Bank / E-Wallet</label>
+                  <label className="block text-[10px] font-bold text-[#0F3D2E] mb-1.5 uppercase tracking-wider">Bank / E-Wallet</label>
                   <Input
                     placeholder="Misal: BCA, Mandiri, Dana, OVO"
                     value={formData.rekening_bank}
                     onChange={(e) => setFormData({ ...formData, rekening_bank: e.target.value })}
-                    className="eco-input rounded-2xl border-2 border-amber-300/30 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+                    className="eco-input rounded-xl border border-amber-300/30 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 h-10 px-3 text-sm"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-[#0F3D2E] mb-3 uppercase tracking-wider">Nomor Rekening / HP</label>
+                  <label className="block text-[10px] font-bold text-[#0F3D2E] mb-1.5 uppercase tracking-wider">Nomor Rekening / HP</label>
                   <Input
                     placeholder="08xxxxxxxxxx atau 123456789"
                     value={formData.nomor_rekening}
                     onChange={(e) => setFormData({ ...formData, nomor_rekening: e.target.value })}
-                    className="eco-input rounded-2xl border-2 border-amber-300/30 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+                    className="eco-input rounded-xl border border-amber-300/30 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 h-10 px-3 text-sm"
                   />
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-xs font-bold text-[#0F3D2E] mb-3 uppercase tracking-wider">Atas Nama</label>
+                  <label className="block text-[10px] font-bold text-[#0F3D2E] mb-1.5 uppercase tracking-wider">Atas Nama</label>
                   <Input
                     value={formData.nama_rekening}
                     onChange={(e) => setFormData({ ...formData, nama_rekening: e.target.value })}
-                    className="eco-input rounded-2xl border-2 border-amber-300/30 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+                    className="eco-input rounded-xl border border-amber-300/30 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 h-10 px-3 text-sm"
                   />
                 </div>
               </div>
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-end mt-6">
+            <div className="flex flex-col sm:flex-row gap-3 justify-end mt-4">
               <Button
                 type="button"
                 onClick={() => {
@@ -3684,13 +3684,13 @@ const ProfilPage: React.FC = () => {
                     nama_rekening: user?.nama_rekening || '',
                   });
                 }}
-                className="w-full sm:w-auto px-8 py-3 bg-white hover:bg-gray-50 text-gray-700 font-bold rounded-2xl transition-colors border-2 border-gray-200"
+                className="w-full sm:w-auto px-6 py-2.5 bg-white hover:bg-gray-50 text-gray-700 font-bold rounded-xl transition-colors border border-gray-200 text-sm"
               >
                 Reset
               </Button>
               <Button
                 type="submit"
-                className="w-full sm:w-auto px-8 py-3 bg-[#22C55E] hover:bg-[#16A34A] text-white font-bold rounded-2xl transition-colors shadow-lg shadow-[#22C55E]/20"
+                className="w-full sm:w-auto px-6 py-2.5 bg-[#22C55E] hover:bg-[#16A34A] text-white font-bold rounded-xl transition-colors shadow-sm shadow-[#22C55E]/10 text-sm"
               >
                 Simpan Perubahan
               </Button>
@@ -3700,98 +3700,98 @@ const ProfilPage: React.FC = () => {
 
         {/* Tab: Keamanan */}
         {activeTab === 'keamanan' && (
-          <div className="eco-card p-8 rounded-3xl shadow-lg border-l-4 border-l-red-500">
-            <h3 className="text-2xl font-black text-[#0F3D2E] mb-2 flex items-center gap-3">
-              <div className="w-12 h-12 bg-red-100 rounded-2xl flex items-center justify-center">
-                <Lock className="w-6 h-6 text-red-600" />
+          <div className="eco-card p-5 rounded-2xl shadow-sm border-l-4 border-l-red-500">
+            <h3 className="text-base font-bold text-[#0F3D2E] mb-1 flex items-center gap-3">
+              <div className="w-9 h-9 bg-red-100 rounded-xl flex items-center justify-center">
+                <Lock className="w-5 h-5 text-red-600" />
               </div>
               Keamanan Akun
             </h3>
-            <p className="text-sm text-gray-600 mb-8 italic">Kelola password dan keamanan akun Anda</p>
+            <p className="text-xs text-gray-500 mb-6 italic">Kelola password dan keamanan akun Anda</p>
 
             <Dialog open={showPasswordDialog} onOpenChange={setShowPasswordDialog}>
               <DialogTrigger asChild>
-                <Button className="w-full sm:w-auto sm:px-8 bg-red-500 hover:bg-red-600 text-white py-3 text-base font-bold rounded-2xl transition-colors flex items-center justify-center gap-2">
-                  <Lock className="w-5 h-5" />
+                <Button className="w-full sm:w-auto sm:px-6 bg-red-500 hover:bg-red-600 text-white py-2.5 text-sm font-bold rounded-xl transition-colors flex items-center justify-center gap-2">
+                  <Lock className="w-4 h-4" />
                   Ubah Password
                 </Button>
               </DialogTrigger>
-              <DialogContent className="rounded-3xl">
+              <DialogContent className="rounded-2xl max-w-md p-6">
                 <DialogHeader>
-                  <DialogTitle className="text-2xl font-black text-[#0F3D2E]">Ubah Password</DialogTitle>
+                  <DialogTitle className="text-lg font-bold text-[#0F3D2E]">Ubah Password</DialogTitle>
                 </DialogHeader>
-                <form onSubmit={handleChangePassword} className="space-y-6 mt-6">
+                <form onSubmit={handleChangePassword} className="space-y-4 mt-4">
                   <div>
-                    <label className="block text-sm font-bold text-[#0F3D2E] mb-3">Password Lama</label>
+                    <label className="block text-xs font-bold text-[#0F3D2E] mb-1.5">Password Lama</label>
                     <div className="relative">
                       <Input
                         type={showPassword ? 'text' : 'password'}
                         value={passwordForm.oldPassword}
                         onChange={(e) => setPasswordForm({ ...passwordForm, oldPassword: e.target.value })}
-                        className="eco-input rounded-2xl border-2 border-gray-300 pr-12"
+                        className="eco-input rounded-xl border border-gray-300 pr-10 h-10 text-sm"
                         required
                       />
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                       >
-                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-bold text-[#0F3D2E] mb-3">Password Baru</label>
+                    <label className="block text-xs font-bold text-[#0F3D2E] mb-1.5">Password Baru</label>
                     <div className="relative">
                       <Input
                         type={showNewPassword ? 'text' : 'password'}
                         value={passwordForm.newPassword}
                         onChange={(e) => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
-                        className="eco-input rounded-2xl border-2 border-gray-300 pr-12"
+                        className="eco-input rounded-xl border border-gray-300 pr-10 h-10 text-sm"
                         required
                       />
                       <button
                         type="button"
                         onClick={() => setShowNewPassword(!showNewPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                       >
-                        {showNewPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        {showNewPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-bold text-[#0F3D2E] mb-3">Konfirmasi Password Baru</label>
+                    <label className="block text-xs font-bold text-[#0F3D2E] mb-1.5">Konfirmasi Password Baru</label>
                     <div className="relative">
                       <Input
                         type={showConfirmPassword ? 'text' : 'password'}
                         value={passwordForm.confirmPassword}
                         onChange={(e) => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
-                        className="eco-input rounded-2xl border-2 border-gray-300 pr-12"
+                        className="eco-input rounded-xl border border-gray-300 pr-10 h-10 text-sm"
                         required
                       />
                       <button
                         type="button"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
                       >
-                        {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                        {showConfirmPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                       </button>
                     </div>
                   </div>
 
-                  <div className="flex gap-4 pt-4">
+                  <div className="flex gap-3 pt-4">
                     <Button
                       type="button"
                       onClick={() => setShowPasswordDialog(false)}
-                      className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-base font-bold rounded-2xl transition-colors"
+                      className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-2.5 text-sm font-bold rounded-xl transition-colors"
                     >
                       Batal
                     </Button>
                     <Button
                       type="submit"
-                      className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-base font-bold rounded-2xl transition-colors"
+                      className="w-full bg-red-500 hover:bg-red-600 text-white py-2.5 text-sm font-bold rounded-xl transition-colors"
                     >
                       Ubah Password
                     </Button>
@@ -3800,12 +3800,12 @@ const ProfilPage: React.FC = () => {
               </DialogContent>
             </Dialog>
 
-            <div className="mt-8 p-6 bg-blue-50 border-2 border-blue-200 rounded-2xl">
+            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
               <div className="flex gap-3">
-                <Info className="w-6 h-6 text-blue-600 flex-shrink-0 mt-0.5" />
+                <Info className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-bold text-blue-900 mb-2">Tips Keamanan</p>
-                  <ul className="text-sm text-blue-800 space-y-1">
+                  <p className="font-bold text-blue-900 mb-1 text-sm">Tips Keamanan</p>
+                  <ul className="text-xs text-blue-800 space-y-1">
                     <li>• Gunakan password yang kuat dengan kombinasi huruf, angka, dan simbol</li>
                     <li>• Jangan bagikan password Anda kepada siapa pun</li>
                     <li>• Ubah password secara berkala untuk keamanan maksimal</li>
