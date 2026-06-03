@@ -76,7 +76,7 @@ router.put(
   '/:id',
   asyncHandler(async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { nama, email, telepon, alamat, rekeningBank, nomorRekening, namaRekening } =
+    const { nama, email, telepon, alamat, rekeningBank, nomorRekening, namaRekening, password } =
       req.body;
 
     try {
@@ -88,6 +88,7 @@ router.put(
         rekeningBank,
         nomorRekening,
         namaRekening,
+        password,
       });
 
       return ApiSuccess.send(res, nasabah, 'Profil berhasil diperbarui', 200);

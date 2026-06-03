@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { prisma } from '../lib/prisma.js';
 import { logger } from '../lib/logger.js';
+import { generateNextUserId } from '../lib/idGenerator.js';
 
 export interface LoginRequest {
   email: string;
@@ -74,9 +75,13 @@ export class AuthService {
       // Hash password
       const hashedPassword = await bcrypt.hash(data.password, 10);
 
+      // Generate sequential ID
+      const nextId = await generateNextUserId('NASABAH');
+
       // Create user
       const user = await prisma.user.create({
         data: {
+          id: nextId,
           nama: data.nama,
           email: data.email.toLowerCase(),
           password: hashedPassword,

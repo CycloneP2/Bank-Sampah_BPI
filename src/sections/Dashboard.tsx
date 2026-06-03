@@ -1023,6 +1023,8 @@ const DataNasabahPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [nasabahList, setNasabahList] = useState<User[]>([]);
   const [showAddDialog, setShowAddDialog] = useState(false);
+  const [showEditDialog, setShowEditDialog] = useState(false);
+  const [editingNasabah, setEditingNasabah] = useState<User | null>(null);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const { user } = useAuth();
@@ -1051,14 +1053,29 @@ const DataNasabahPage: React.FC = () => {
 
   const filteredNasabah = nasabahList.filter((n: User) =>
     n.nama.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    n.id.toLowerCase().includes(searchTerm.toLowerCase())
+    n.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (n.email && n.email.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
 
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (confirm('Apakah Anda yakin ingin menghapus nasabah ini?')) {
-      setNasabahList(prev => prev.filter(n => n.id !== id));
+      try {
+        const response = await fetch(`${API_URL}/nasabah.php`, {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        const result = await response.json();
+        if (result.status === 'success') {
+          setRefreshTrigger(prev => prev + 1);
+        } else {
+          alert(result.message || 'Gagal menghapus nasabah');
+        }
+      } catch (err) {
+        alert('Gagal menghapus nasabah. Silakan coba lagi.');
+      }
     }
   };
 
@@ -1104,6 +1121,7 @@ const DataNasabahPage: React.FC = () => {
               <tr>
                 <th>ID Nasabah</th>
                 <th>Nama Nasabah</th>
+                <th>Email</th>
                 <th>Nomor Telepon</th>
                 <th>Alamat</th>
                 <th>Saldo</th>
@@ -1115,6 +1133,7 @@ const DataNasabahPage: React.FC = () => {
                 <tr key={nasabah.id}>
                   <td className="font-medium text-[#0F3D2E]">{nasabah.id}</td>
                   <td>{nasabah.nama}</td>
+                  <td>{nasabah.email}</td>
                   <td>{nasabah.telepon}</td>
                   <td className="max-w-xs truncate">{nasabah.alamat}</td>
                   <td className="font-semibold text-[#22C55E]">
@@ -1122,7 +1141,13 @@ const DataNasabahPage: React.FC = () => {
                   </td>
                   <td>
                     <div className="flex items-center gap-2">
-                      <button className="p-2 hover:bg-[#22C55E]/10 rounded-lg text-[#22C55E]">
+                      <button
+                        onClick={() => {
+                          setEditingNasabah(nasabah);
+                          setShowEditDialog(true);
+                        }}
+                        className="p-2 hover:bg-[#22C55E]/10 rounded-lg text-[#22C55E]"
+                      >
                         <Edit2 className="w-4 h-4" />
                       </button>
                       <button
@@ -1144,6 +1169,27 @@ const DataNasabahPage: React.FC = () => {
           </div>
         )}
       </div>
+
+      {/* Edit Dialog */}
+      <Dialog open={showEditDialog} onOpenChange={setShowEditDialog}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-[#0F3D2E]">Edit Nasabah</DialogTitle>
+          </DialogHeader>
+          {editingNasabah && (
+            <EditNasabahForm 
+              nasabah={editingNasabah}
+              onClose={() => {
+                setShowEditDialog(false);
+                setEditingNasabah(null);
+              }}
+              onSuccess={() => {
+                setRefreshTrigger(prev => prev + 1);
+              }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
@@ -1323,6 +1369,195 @@ const AddNasabahForm: React.FC<{ onClose: () => void; onSuccess?: () => void }> 
         />
       </div>
       <div className="flex gap-3 pt-4">
+        <Button type="button" variant="outline" onClick={onClose} className="flex-1" disabled={isLoading}>
+          Batal
+        </Button>
+        <Button type="submit" className="flex-1 bg-[#22C55E] hover:bg-[#16A34A] text-white" disabled={isLoading}>
+          {isLoading ? 'Menyimpan...' : 'Simpan'}
+        </Button>
+      </div>
+    </form>
+  );
+};
+
+interface EditNasabahFormProps {
+  nasabah: User;
+  onClose: () => void;
+  onSuccess?: () => void;
+}
+
+const EditNasabahForm: React.FC<EditNasabahFormProps> = ({ nasabah, onClose, onSuccess }) => {
+  const [formData, setFormData] = useState({
+    nama: nasabah.nama || '',
+    telepon: nasabah.telepon || '',
+    alamat: nasabah.alamat || '',
+    email: nasabah.email || '',
+    password: '',
+    confirmPassword: '',
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const generatePassword = () => {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%';
+    let password = '';
+    for (let i = 0; i < 12; i++) {
+      password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    setFormData({ ...formData, password, confirmPassword: password });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(false);
+
+    if (formData.password.trim()) {
+      if (formData.password !== formData.confirmPassword) {
+        setError('Password dan konfirmasi password tidak cocok!');
+        return;
+      }
+      if (formData.password.length < 6) {
+        setError('Password minimal 6 karakter!');
+        return;
+      }
+    }
+
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${API_URL}/nasabah.php`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: nasabah.id,
+          nama: formData.nama,
+          email: formData.email,
+          telepon: formData.telepon,
+          alamat: formData.alamat,
+          ...(formData.password.trim() ? { password: formData.password } : {})
+        })
+      });
+      const result = await response.json();
+      
+      if (result.status === 'success') {
+        setSuccess(true);
+        if (onSuccess) {
+          onSuccess();
+        }
+        setTimeout(() => {
+          onClose();
+        }, 1500);
+      } else {
+        setError(result.message || 'Gagal mengubah nasabah');
+      }
+    } catch (err) {
+      setError('Gagal menghubungi server. Silakan coba beberapa saat lagi.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+      {error && (
+        <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-red-700 text-sm">
+          {error}
+        </div>
+      )}
+      {success && (
+        <div className="bg-green-50 border border-green-200 rounded-lg p-3 text-green-700 text-sm">
+          ✓ Nasabah berhasil diperbarui!
+        </div>
+      )}
+      <div>
+        <label className="block text-sm font-medium text-[#0F3D2E] mb-1">Nama Lengkap</label>
+        <Input
+          value={formData.nama}
+          onChange={(e) => setFormData({ ...formData, nama: e.target.value })}
+          className="eco-input"
+          required
+          disabled={isLoading}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-[#0F3D2E] mb-1">Email</label>
+        <Input
+          type="email"
+          value={formData.email}
+          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+          className="eco-input"
+          required
+          disabled={isLoading}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-[#0F3D2E] mb-1">Nomor Telepon</label>
+        <Input
+          value={formData.telepon}
+          onChange={(e) => setFormData({ ...formData, telepon: e.target.value })}
+          className="eco-input"
+          required
+          disabled={isLoading}
+        />
+      </div>
+      <div>
+        <label className="block text-sm font-medium text-[#0F3D2E] mb-1">Alamat</label>
+        <textarea
+          value={formData.alamat}
+          onChange={(e) => setFormData({ ...formData, alamat: e.target.value })}
+          className="eco-input w-full h-24 resize-none"
+          required
+          disabled={isLoading}
+        />
+      </div>
+      <div className="border-t border-gray-200 pt-4">
+        <div className="flex justify-between items-center mb-3">
+          <label className="block text-sm font-medium text-[#0F3D2E]">Password Baru (Kosongkan jika tidak diubah)</label>
+          <button
+            type="button"
+            onClick={generatePassword}
+            className="text-xs text-[#22C55E] hover:text-[#16A34A] font-medium"
+            disabled={isLoading}
+          >
+            Generate Password
+          </button>
+        </div>
+        <div className="relative">
+          <Input
+            type={showPassword ? 'text' : 'password'}
+            value={formData.password}
+            onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+            className="eco-input pr-10"
+            disabled={isLoading}
+            placeholder="Masukkan password baru jika ingin mengubah"
+          />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            disabled={isLoading}
+          >
+            {showPassword ? '👁️' : '👁️‍🗨️'}
+          </button>
+        </div>
+      </div>
+      {formData.password.trim() && (
+        <div>
+          <label className="block text-sm font-medium text-[#0F3D2E] mb-1">Konfirmasi Password Baru</label>
+          <Input
+            type={showPassword ? 'text' : 'password'}
+            value={formData.confirmPassword}
+            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+            className="eco-input"
+            required={!!formData.password.trim()}
+            disabled={isLoading}
+          />
+        </div>
+      )}
+      <div className="flex gap-3 pt-4 border-t border-gray-100">
         <Button type="button" variant="outline" onClick={onClose} className="flex-1" disabled={isLoading}>
           Batal
         </Button>

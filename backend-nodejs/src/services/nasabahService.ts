@@ -1,6 +1,6 @@
 import { prisma } from '../lib/prisma.js';
 import { logger } from '../lib/logger.js';
-import { generateId } from '../lib/response.js';
+import { generateNextUserId } from '../lib/idGenerator.js';
 
 export interface CreateNasabahRequest {
   nama: string;
@@ -19,6 +19,7 @@ export interface UpdateNasabahRequest {
   rekeningBank?: string;
   nomorRekening?: string;
   namaRekening?: string;
+  password?: string;
 }
 
 export class NasabahService {
@@ -104,9 +105,10 @@ export class NasabahService {
       const bcryptjs = await import('bcryptjs');
       const hashedPassword = await bcryptjs.hash(data.password, 10);
 
+      const nextId = await generateNextUserId('NASABAH');
       const nasabah = await prisma.user.create({
         data: {
-          id: generateId('NS'),
+          id: nextId,
           nama: data.nama,
           email: data.email.toLowerCase(),
           password: hashedPassword,
@@ -149,6 +151,13 @@ export class NasabahService {
         }
       }
 
+      // Hash password if provided
+      let hashedPassword;
+      if (data.password) {
+        const bcryptjs = await import('bcryptjs');
+        hashedPassword = await bcryptjs.hash(data.password, 10);
+      }
+
       const nasabah = await prisma.user.update({
         where: { id },
         data: {
@@ -159,6 +168,7 @@ export class NasabahService {
           ...(data.rekeningBank && { rekeningBank: data.rekeningBank }),
           ...(data.nomorRekening && { nomorRekening: data.nomorRekening }),
           ...(data.namaRekening && { namaRekening: data.namaRekening }),
+          ...(hashedPassword && { password: hashedPassword }),
         },
         select: {
           id: true,
