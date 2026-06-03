@@ -68,7 +68,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return false;
       }
     } catch {
-      setLoginError('Koneksi ke server backend gagal. Pastikan Apache & MySQL di XAMPP sudah berjalan.');
+      setLoginError('Koneksi ke server backend gagal. Silakan coba beberapa saat lagi.');
       return false;
     }
   }, []);

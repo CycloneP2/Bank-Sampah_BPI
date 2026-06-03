@@ -1219,7 +1219,7 @@ const AddNasabahForm: React.FC<{ onClose: () => void; onSuccess?: () => void }> 
         setError(result.message || 'Gagal menambah nasabah');
       }
     } catch (err) {
-      setError('Gagal menghubungi server. Pastikan XAMPP Apache & MySQL sudah berjalan.');
+      setError('Gagal menghubungi server. Silakan coba beberapa saat lagi.');
     } finally {
       setIsLoading(false);
     }
@@ -1457,7 +1457,7 @@ const DataSampahPage: React.FC = () => {
         setError(result.message || 'Gagal menambah jenis sampah');
       }
     } catch (err) {
-      setError('Gagal menghubungi server. Pastikan XAMPP Apache & MySQL sudah berjalan.');
+      setError('Gagal menghubungi server. Silakan coba beberapa saat lagi.');
     } finally {
       setIsLoading(false);
     }
@@ -1498,7 +1498,7 @@ const DataSampahPage: React.FC = () => {
         setError(result.message || 'Gagal mengubah jenis sampah');
       }
     } catch (err) {
-      setError('Gagal menghubungi server. Pastikan XAMPP Apache & MySQL sudah berjalan.');
+      setError('Gagal menghubungi server. Silakan coba beberapa saat lagi.');
     } finally {
       setIsLoading(false);
     }
@@ -1981,7 +1981,7 @@ const TransaksiSetorPage: React.FC = () => {
       fetchPending();
     } catch (err) {
       console.error('Submit error:', err);
-      alert('Gagal menghubungi server. Pastikan XAMPP Apache & MySQL sudah berjalan.');
+      alert('Gagal menghubungi server. Silakan coba beberapa saat lagi.');
     }
   };
 
@@ -2943,7 +2943,7 @@ const BeritaPage: React.FC = () => {
         setError(result.message || 'Gagal menambah berita');
       }
     } catch (err) {
-      setError('Gagal menghubungi server. Pastikan XAMPP Apache & MySQL sudah berjalan.');
+      setError('Gagal menghubungi server. Silakan coba beberapa saat lagi.');
     } finally {
       setIsLoading(false);
     }
@@ -2984,7 +2984,7 @@ const BeritaPage: React.FC = () => {
         setError(result.message || 'Gagal mengubah berita');
       }
     } catch (err) {
-      setError('Gagal menghubungi server. Pastikan XAMPP Apache & MySQL sudah berjalan.');
+      setError('Gagal menghubungi server. Silakan coba beberapa saat lagi.');
     } finally {
       setIsLoading(false);
     }
@@ -4506,7 +4506,7 @@ const KelolaNotifikasiPage: React.FC = () => {
         setError(result.message || 'Gagal menyimpan notifikasi');
       }
     } catch (err) {
-      setError('Gagal menghubungi server. Pastikan XAMPP Apache & MySQL sudah berjalan.');
+      setError('Gagal menghubungi server. Silakan coba beberapa saat lagi.');
     } finally {
       setIsLoading(false);
     }

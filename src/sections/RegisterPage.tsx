@@ -52,7 +52,7 @@ const RegisterPage: React.FC<RegisterPageProps> = ({ onNavigate }) => {
                 setError(result.message || 'Gagal daftar akun.');
             }
         } catch (err) {
-            setError('Gagal menghubungi server. Pastikan XAMPP Apache menyala.');
+            setError('Gagal menghubungi server. Silakan coba beberapa saat lagi.');
         } finally {
             setIsLoading(false);
         }
