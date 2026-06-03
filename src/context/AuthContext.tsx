@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useCallback } from 'react';
 import type { User, UserRole, LoginCredentials } from '@/types';
 
 // URL API backend - set VITE_API_URL di file .env untuk production
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost/api';
+const API_URL = import.meta.env.VITE_API_URL || 'https://bank-sampahbpi.vercel.app/api';
 
 interface AuthContextType {
   user: User | null;

@@ -181,7 +181,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ onNavigate }) => {
 
   // Fetch berita dari API
   React.useEffect(() => {
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+    const API_URL = import.meta.env.VITE_API_URL || 'https://bank-sampahbpi.vercel.app/api';
     fetch(`${API_URL}/berita.php`)
       .then(res => res.json())
       .then(res => {

@@ -5,7 +5,7 @@
  * dan perbedaan enum (UPPERCASE vs lowercase) antara Frontend dan Node.js Backend.
  */
 
-export const API_URL = import.meta.env.VITE_API_URL || '/api';
+export const API_URL = import.meta.env.VITE_API_URL || 'https://bank-sampahbpi.vercel.app/api';
 
 // Helper: Ubah camelCase ke snake_case untuk properti tertentu
 function camelToSnakeKey(key: string): string {
