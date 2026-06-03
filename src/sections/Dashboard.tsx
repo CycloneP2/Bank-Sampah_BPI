@@ -3423,7 +3423,7 @@ const ProfilPage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6">
       {/* Header Profile Card */}
       <div className="relative overflow-hidden rounded-3xl shadow-xl">
         <div className="absolute inset-0 bg-gradient-to-br from-[#0F3D2E] via-[#1a5d4a] to-[#0F3D2E]" />
@@ -3668,32 +3668,32 @@ const ProfilPage: React.FC = () => {
                   />
                 </div>
               </div>
+            </div>
 
-              {/* Action Buttons */}
-              <div className="flex gap-4 pt-6 border-t border-amber-200 mt-6">
-                <Button
-                  type="button"
-                  onClick={() => {
-                    setFormData({
-                      nama: user?.nama || '',
-                      telepon: user?.telepon || '',
-                      alamat: user?.alamat || '',
-                      rekening_bank: user?.rekening_bank || '',
-                      nomor_rekening: user?.nomor_rekening || '',
-                      nama_rekening: user?.nama_rekening || '',
-                    });
-                  }}
-                  className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 py-3 text-base font-bold rounded-2xl transition-colors"
-                >
-                  Reset
-                </Button>
-                <Button
-                  type="submit"
-                  className="w-full bg-[#22C55E] hover:bg-[#16A34A] text-white py-3 text-base font-bold rounded-2xl transition-colors"
-                >
-                  Simpan Perubahan
-                </Button>
-              </div>
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-end mt-6">
+              <Button
+                type="button"
+                onClick={() => {
+                  setFormData({
+                    nama: user?.nama || '',
+                    telepon: user?.telepon || '',
+                    alamat: user?.alamat || '',
+                    rekening_bank: user?.rekening_bank || '',
+                    nomor_rekening: user?.nomor_rekening || '',
+                    nama_rekening: user?.nama_rekening || '',
+                  });
+                }}
+                className="w-full sm:w-auto px-8 py-3 bg-white hover:bg-gray-50 text-gray-700 font-bold rounded-2xl transition-colors border-2 border-gray-200"
+              >
+                Reset
+              </Button>
+              <Button
+                type="submit"
+                className="w-full sm:w-auto px-8 py-3 bg-[#22C55E] hover:bg-[#16A34A] text-white font-bold rounded-2xl transition-colors shadow-lg shadow-[#22C55E]/20"
+              >
+                Simpan Perubahan
+              </Button>
             </div>
           </form>
         )}
@@ -3711,7 +3711,7 @@ const ProfilPage: React.FC = () => {
 
             <Dialog open={showPasswordDialog} onOpenChange={setShowPasswordDialog}>
               <DialogTrigger asChild>
-                <Button className="w-full bg-red-500 hover:bg-red-600 text-white py-3 text-base font-bold rounded-2xl transition-colors flex items-center justify-center gap-2">
+                <Button className="w-full sm:w-auto sm:px-8 bg-red-500 hover:bg-red-600 text-white py-3 text-base font-bold rounded-2xl transition-colors flex items-center justify-center gap-2">
                   <Lock className="w-5 h-5" />
                   Ubah Password
                 </Button>
