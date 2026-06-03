@@ -1,0 +1,50 @@
+# Netlify Configuration for Backend Node.js
+# Deploy Bank Sampah Backend to Netlify
+
+[build]
+  # Build command - compile TypeScript
+  command = "npm run build"
+  
+  # Output directory - where compiled code goes
+  publish = "dist"
+  
+  # Functions directory - for serverless functions
+  functions = "netlify/functions"
+  
+  # Node.js version
+  node_version = "18.x"
+
+# Environment variables (set these in Netlify dashboard)
+[env]
+  NODE_ENV = "production"
+
+# Development environment (for local testing)
+[env.development]
+  NODE_ENV = "development"
+
+# Redirect all requests to server.ts (for API)
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/server:path"
+  status = 200
+
+# Redirect root to server
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/server"
+  status = 200
+
+# CORS headers
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET,POST,PUT,DELETE,OPTIONS"
+    Access-Control-Allow-Headers = "Content-Type,Authorization"
+
+# Cache policy for API routes
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+

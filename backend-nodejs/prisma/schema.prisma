@@ -1,0 +1,229 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================================
+// Model: Users
+// ============================================================
+model User {
+  id                   String   @id @default(cuid())
+  nama                 String
+  email                String   @unique
+  password             String
+  telepon              String?
+  alamat               String?  @db.Text
+  role                 Role     @default(NASABAH)
+  saldo                Decimal  @default(0) @db.Decimal(15, 2)
+  totalSetoran         Decimal  @default(0) @db.Decimal(15, 2)
+  rekeningBank         String?
+  nomorRekening        String?
+  namaRekening         String?
+  tanggalBergabung     DateTime?
+  penimbanganPertama   DateTime?
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  // Relations
+  transaksis           Transaksi[]
+  notifikasis          Notifikasi[]
+  penjemputans         Penjemputan[]
+
+  @@index([role])
+  @@index([email])
+  @@map("users")
+}
+
+enum Role {
+  NASABAH
+  PETUGAS
+  PENGURUS
+
+  @@map("role")
+}
+
+// ============================================================
+// Model: JenisSampah
+// ============================================================
+model JenisSampah {
+  id          String    @id @default(cuid())
+  nama        String
+  hargaBeli   Decimal   @db.Decimal(10, 2)
+  hargaJual   Decimal   @db.Decimal(10, 2)
+  kategori    Kategori
+  deskripsi   String?   @db.Text
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  transaksis  Transaksi[]
+
+  @@index([kategori])
+  @@map("jenis_sampah")
+}
+
+enum Kategori {
+  ORGANIK
+  ANORGANIK
+  B3
+  LAINNYA
+
+  @@map("kategori")
+}
+
+// ============================================================
+// Model: Transaksi
+// ============================================================
+model Transaksi {
+  id               String        @id @default(cuid())
+  nasabahId        String?
+  nasabahNama      String?
+  jenisTransaksi   JenisTransaksi
+  jenisSampahId    String?
+  jenisSampahNama  String?
+  berat            Decimal?      @db.Decimal(10, 2)
+  hargaPerKg       Decimal?      @db.Decimal(10, 2)
+  hargaJualPerKg   Decimal?      @db.Decimal(10, 2)
+  jumlah           Decimal       @db.Decimal(15, 2)
+  tanggal          DateTime      @default(now())
+  status           StatusTransaksi @default(PENDING)
+  keterangan       String?       @db.Text
+  petugasId        String?
+  petugasNama      String?
+  lapakNama        String?
+  rekeningTujuan   String?
+  nomorTujuan      String?
+  namaTujuan       String?
+  processedBy      String?
+  processedAt      DateTime?
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  // Relations
+  nasabah          User?         @relation(fields: [nasabahId], references: [id], onDelete: SetNull)
+  jenisSampah      JenisSampah?  @relation(fields: [jenisSampahId], references: [id], onDelete: SetNull)
+
+  @@index([nasabahId])
+  @@index([jenisSampahId])
+  @@index([tanggal])
+  @@index([status])
+  @@map("transaksi")
+}
+
+enum JenisTransaksi {
+  SETOR
+  TARIK
+  JUAL
+
+  @@map("jenis_transaksi")
+}
+
+enum StatusTransaksi {
+  PENDING
+  SUCCESS
+  CANCELLED
+
+  @@map("status_transaksi")
+}
+
+// ============================================================
+// Model: Berita
+// ============================================================
+model Berita {
+  id        String      @id @default(cuid())
+  judul     String
+  tanggal   DateTime    @default(now())
+  deskripsi String      @db.Text
+  gambar    String?
+  kategori  KategoriBerita
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([tanggal])
+  @@index([kategori])
+  @@map("berita")
+}
+
+enum KategoriBerita {
+  EDUKASI
+  KEGIATAN
+  PENGUMUMAN
+
+  @@map("kategori_berita")
+}
+
+// ============================================================
+// Model: Notifikasi
+// ============================================================
+model Notifikasi {
+  id        String              @id @default(cuid())
+  nasabahId String?
+  title     String
+  msg       String              @db.Text
+  status    StatusNotifikasi     @default(DRAFT)
+  isRead    Boolean             @default(false)
+  readAt    DateTime?
+  createdAt DateTime            @default(now())
+  updatedAt DateTime            @updatedAt
+
+  // Relations
+  nasabah   User?               @relation(fields: [nasabahId], references: [id], onDelete: Cascade)
+
+  @@index([nasabahId])
+  @@index([status])
+  @@index([isRead])
+  @@map("notifikasi")
+}
+
+enum StatusNotifikasi {
+  DRAFT
+  PUBLISHED
+
+  @@map("status_notifikasi")
+}
+
+// ============================================================
+// Model: Penjemputan
+// ============================================================
+model Penjemputan {
+  id        String            @id @default(cuid())
+  nasabahId String
+  nasabahNama String?
+  tanggal   DateTime          @default(now())
+  waktu     WaktuPenjemputan
+  alamat    String            @db.Text
+  status    StatusPenjemputan @default(PENDING)
+  createdAt DateTime          @default(now())
+  updatedAt DateTime          @updatedAt
+
+  // Relations
+  nasabah   User              @relation(fields: [nasabahId], references: [id], onDelete: Cascade)
+
+  @@index([nasabahId])
+  @@index([tanggal])
+  @@index([status])
+  @@map("penjemputan")
+}
+
+enum WaktuPenjemputan {
+  PAGI
+  SIANG
+  SORE
+
+  @@map("waktu_penjemputan")
+}
+
+enum StatusPenjemputan {
+  PENDING
+  PROCESSED
+  CANCELLED
+
+  @@map("status_penjemputan")
+}
